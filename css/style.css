@@ -1,0 +1,115 @@
+/* I know, the css and the styling of the website is not a part of the assignment
+But I still added some CSS to make it look nice*/
+/*I will comment the css later if I have some time left, either way I don't think its required*/
+    body {
+        top: 50%;
+        bottom: auto;
+        margin: 0;
+        padding: 0;
+        font-family: 'Orbitron', sans-serif;
+        background-color: #111;
+        color: #eee;
+        position: relative;
+    }
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('../image/cityLineSunset.jpg');
+/* Image taken from freepik.com, I thinks its under an open license so I can use it*/
+        background-size: cover;
+        background-position: center;
+        opacity: 0.5;
+        z-index: -1;
+    }
+
+    header {
+        background-color: #d10000;
+        color: #fff;
+        padding-top: 20px;
+        padding-bottom: 10px;
+        padding-left: 20px;
+        position: relative;
+    }
+
+    header h1 {
+        margin: 0;
+        font-weight: 700;
+    }
+
+    nav ul {
+        padding: 0;
+        list-style: none;
+    }
+
+    nav ul li {
+        display: inline;
+        margin-right: 10px;
+    }
+
+    nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    footer {
+        background-color: #222;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    form {
+        background-color: #292929;
+        color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    button[type="submit"], input[type="text"], input[type="number"], select, textarea {
+        border: 1px solid #d10000;
+    }
+
+    button[type="submit"] {
+        background-color: #d10000;
+        color: white;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #a80000;
+    }
+
+    table {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+        border-collapse: collapse;
+        width: 90%;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        text-align: left;
+        padding: 12px;
+    }
+
+    th {
+        background-color: #d10000;
+        color: #fff;
+        font-family: 'Orbitron', sans-serif;
+    }
+
+    tr:hover {
+        background-color: #fa6161;
+        opacity: 75%;
+    }
+

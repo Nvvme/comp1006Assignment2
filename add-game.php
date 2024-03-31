@@ -1,0 +1,52 @@
+<?php
+$title = 'Add New Game';
+//included the headerfile/
+include('shared/header.php');
+
+//connected to the database.
+//I don't know if a connection to the database is needed here.
+require 'shared/database.php';
+?>
+
+<h2>Add New Game</h2>
+<form action="insert-game.php" method="post">
+    <div>
+        <label for="title">Game Name:</label>
+        <input type="text" id="title" name="title" required>
+    </div>
+    <div>
+        <label for="release_year">Release Year:</label>
+        <input type="number" id="release_year" name="release_year" required min="1950" max="<?= date('Y') ?>">
+    </div>
+    <div>
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" name="genre" required>
+    </div>
+    <div>
+        <label for="platform_id">Platform:</label>
+        <select id="platform_id" name="platform_id" required>
+            <?php
+            $sql = "SELECT * FROM platform ORDER BY name";
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            $platforms = $stmt->fetchAll();
+
+            foreach ($platforms as $platform) {
+                echo '<option value="' . htmlspecialchars($platform['platform_id']) . '">' . htmlspecialchars($platform['name']) . '</option>';
+            }
+            ?>
+        </select>
+    </div>
+    <div>
+        <label for="developer">Developer:</label>
+        <input type="text" id="developer" name="developer">
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea>
+    </div>
+    <button type="submit">Add Game</button>
+</form>
+<!-- Created the form that will be on the webpage, on the frontend-->
+
+<?php include('shared/footer.php'); // linked my footer ?>
