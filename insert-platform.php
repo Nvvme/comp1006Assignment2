@@ -31,7 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['name'])) {
         echo '<p>Platform added successfully.</p>';
         
         // Provide a link to add another platform
-        echo '<a href="add-platform.php">Add another platform</a>';
+        echo '<a href="add-platform.php" style="color: blue; text-decoration: underline; font-weight: bold;">Add another platform</a>';//added inline style
+
     } catch (Exception $e) {
         // Catch and display any exceptions/errors during the database operation
         echo "Error adding platform: " . $e->getMessage();

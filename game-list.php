@@ -17,7 +17,7 @@ $cmd->execute();
 $games = $cmd->fetchAll();
 
 echo '<h1>Game Library</h1>';
-echo '<table><thead><tr><th>Title</th><th>Release Year</th><th>Genre</th><th>Platform</th><th>Developer</th><th>Description</th></tr></thead><tbody>';
+echo '<table><thead><tr><th>Title</th><th>Release Year</th><th>Genre</th><th>Platform</th><th>Developer</th><th>Description</th><th>Actions</th></tr></thead><tbody>';
 // I used the same method that proff used 
 // Loop through the result set and displaying each game
 foreach ($games as $game) {
@@ -28,9 +28,13 @@ foreach ($games as $game) {
             <td>' . htmlspecialchars($game['platformName']) . '</td>
             <td>' . htmlspecialchars($game['developer']) . '</td>
             <td>' . htmlspecialchars($game['description']) . '</td>
+            <td>
+            <a href="edit-game.php?game_id=' . $game['game_id'] . '" onclick="return confirm(\'Are you sure you want to update the info of this game?\');">Update</a> |
+            <a href="delete-game.php?game_id=' . $game['game_id'] . '" onclick="return confirm(\'Are you sure you want to delete this game?\');">Delete</a> 
+        </td>
           </tr>';
 }
-
+// I know its not good practise to add inline javascript but it is what it is
 
 echo '</tbody></table>';
 

@@ -6,6 +6,7 @@
     <title>Nav's Game Database</title>
     <link rel="stylesheet" href="./css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="js/scripts.js" defer> </script>
 <!--I found this nice font which really goes with the gaming website aesthetic-->
 </head>
 <body>
