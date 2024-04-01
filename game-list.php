@@ -2,6 +2,7 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 // to catch any errors that might occur
+session_start();
 $title = 'Game Library';
 include('shared/header.php');
 
@@ -17,26 +18,32 @@ $cmd->execute();
 $games = $cmd->fetchAll();
 
 echo '<h1>Game Library</h1>';
-echo '<table><thead><tr><th>Title</th><th>Release Year</th><th>Genre</th><th>Platform</th><th>Developer</th><th>Description</th><th>Actions</th></tr></thead><tbody>';
+echo '<table><thead><tr><th>Title</th><th>Release Year</th><th>Genre</th><th>Platform</th><th>Developer</th><th>Description</th>';
+if (!empty($_SESSION['userId'])) { // Check if the user is logged in to display the Actions column
+    echo '<th>Actions</th>';
+}
+ echo '</tr></thead><tbody>';
 // I used the same method that proff used 
 // Loop through the result set and displaying each game
 foreach ($games as $game) {
-    echo '<tr>
-            <td>' . htmlspecialchars($game['title']) . '</td>
-            <td>' . htmlspecialchars($game['release_year']) . '</td>
-            <td>' . htmlspecialchars($game['genre']) . '</td>
-            <td>' . htmlspecialchars($game['platformName']) . '</td>
-            <td>' . htmlspecialchars($game['developer']) . '</td>
-            <td>' . htmlspecialchars($game['description']) . '</td>
-            <td>
-            <a href="edit-game.php?game_id=' . $game['game_id'] . '" onclick="return confirm(\'Are you sure you want to update the info of this game?\');">Update</a> |
-            <a href="delete-game.php?game_id=' . $game['game_id'] . '" onclick="return confirm(\'Are you sure you want to delete this game?\');">Delete</a> 
-        </td>
-          </tr>';
+  echo '<tr>
+          <td>' . htmlspecialchars($game['title']) . '</td>
+          <td>' . htmlspecialchars($game['release_year']) . '</td>
+          <td>' . htmlspecialchars($game['genre']) . '</td>
+          <td>' . htmlspecialchars($game['platformName']) . '</td>
+          <td>' . htmlspecialchars($game['developer']) . '</td>
+          <td>' . htmlspecialchars($game['description']) . '</td>';
+  // Only show the "Update" and "Delete" options to logged-in users
+  if (!empty($_SESSION['userId'])) {
+      echo '<td>
+              <a href="edit-game.php?game_id=' . $game['game_id'] . '">Update</a> |
+              <a href="delete-game.php?game_id=' . $game['game_id'] . '" onclick="return confirm(\'Are you sure you want to delete this game?\');">Delete</a>
+            </td>';
+  }
+  echo '</tr>';
 }
-// I know its not good practise to add inline javascript but it is what it is
 
-echo '</tbody></table>';
+echo '</tbody></table>'; // Close the table
 
 // Disconnect from the database
 $db = null;

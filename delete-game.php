@@ -1,4 +1,5 @@
 <?php
+include('shared/authentication.php');
 // Getting the gameId from the URL parameter using $_GET. As we did in Lesson 6, I think. I am just following a similar approach to what prof did.
 $gameId = $_GET['game_id'];
 

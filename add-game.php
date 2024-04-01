@@ -1,6 +1,7 @@
 <?php
 $title = 'Add New Game';
 include('shared/header.php'); // included the header file
+include('shared/authentication.php');
 require 'shared/database.php';
 ?>
 

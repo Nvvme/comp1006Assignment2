@@ -2,6 +2,7 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL); // added the above to catch the errors
 $title = 'Saving New Game...';
+include('shared/authentication.php');
 include('shared/header.php');
 
 // Capture form inputs into variables

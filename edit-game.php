@@ -3,6 +3,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL); // added the above to catch the errors
 $title = 'Edit Game'; // Dynamic page title like always
 include('shared/header.php'); // Included the header
+include('shared/authentication.php');
 $gameId = $_GET['game_id'];
 
 $title = $releaseYear = $genre = $platform = $developer = $description = null;

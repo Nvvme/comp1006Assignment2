@@ -1,5 +1,6 @@
 <?php
 $title = 'Saving Game Updates...';
+include('shared/authentication.php');
 include('shared/header.php'); // Including the header as always
 
 // Capture form inputs.. again the usual stuff

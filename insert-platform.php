@@ -6,6 +6,8 @@ error_reporting(E_ALL);
 // Include the header file to add a consistent header part across the pages
 include('shared/header.php');
 
+include('shared/authentication.php');
+
 // Check if the form was submitted using the POST method and the 'name' field isn't empty
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['name'])) {
     // Include the database connection file

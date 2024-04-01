@@ -107,7 +107,7 @@ But I still added some CSS to make it look nice*/
     }
     
     input[type="email"], input[type="password"], select, textarea {
-        width: 100%; /* Full width to make the form fields more prominent */
+        width: 96.5%;
         padding: 10px;
         margin-top: 5px; 
         margin-bottom: 15px; 
@@ -120,7 +120,7 @@ But I still added some CSS to make it look nice*/
     input[type="submit"], button {
         background-color: #d10000; /* Keeping with the theme's accent color */
         color: #fff;
-        padding: 10px 15px;
+        padding: 10px 10px;
         border: none;
         border-radius: 4px;
         cursor: pointer; /* Hand cursor on hover */

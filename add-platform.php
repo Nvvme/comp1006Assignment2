@@ -1,6 +1,7 @@
 <?php
 $title = 'Add New Platform';
 include('shared/header.php'); // Linked the header
+include('shared/authentication.php');
 ?>
 
 <h2>Add New Platform</h2>

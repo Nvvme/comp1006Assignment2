@@ -9,7 +9,7 @@ require 'shared/header.php';
 <p>Welcome back Gamer(s), please login to your account.</p>
 
 <!-- Create a login form that submits data via POST request to validate.php -->
-<form method="post" action="validate.php">
+<form method="post" action="verification.php"> <!-- I was going to use validation.php but that didn't seem right -->
   <fieldset>
     <label for="username">Username (Email):</label>
     <input name="username" id="username" required type="email" placeholder="you@example.com" />
