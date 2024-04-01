@@ -1,10 +1,6 @@
 <?php
 $title = 'Add New Game';
-//included the headerfile/
-include('shared/header.php');
-
-//connected to the database.
-//I don't know if a connection to the database is needed here.
+include('shared/header.php'); // included the header file
 require 'shared/database.php';
 ?>
 
@@ -26,12 +22,14 @@ require 'shared/database.php';
         <label for="platform_id">Platform:</label>
         <select id="platform_id" name="platform_id" required>
             <?php
+            // Fetch platforms from the database to populate the dropdown
             $sql = "SELECT * FROM platform ORDER BY name";
             $stmt = $db->prepare($sql);
             $stmt->execute();
             $platforms = $stmt->fetchAll();
 
             foreach ($platforms as $platform) {
+                // looks pretty complex huh
                 echo '<option value="' . htmlspecialchars($platform['platform_id']) . '">' . htmlspecialchars($platform['name']) . '</option>';
             }
             ?>
@@ -47,6 +45,6 @@ require 'shared/database.php';
     </div>
     <button type="submit">Add Game</button>
 </form>
-<!-- Created the form that will be on the webpage, on the frontend-->
+<!-- Created the form that will be on the webpage, on the frontend -->
 
 <?php include('shared/footer.php'); // linked my footer ?>

@@ -16,6 +16,7 @@
             <li><a href="index.php">Home</a></li>
             <li><a href="add-game.php">Add Game</a></li>
             <li><a href="game-list.php">Game List</a></li>
+            <li><a href="add-platform.php">Add Platform</a></li>
 <!-- I think three pages are fine for what I am trying to do-->
         </ul>
     </nav>
