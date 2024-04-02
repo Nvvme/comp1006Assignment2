@@ -10,13 +10,13 @@ include('shared/authentication.php');
 
 // Check if the form was submitted using the POST method and the 'name' field isn't empty
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['name'])) {
-    // Include the database connection file
-    include('shared/database.php');
-    
-    // Retrieve the 'name' field value from the form submission
-    $name = $_POST['name'];
-
     try {
+        // Include the database connection file
+        include('shared/database.php');
+        
+        // Retrieve the 'name' field value from the form submission
+        $name = $_POST['name'];
+
         // SQL statement to insert the new platform name into the 'platform' table
         $sql = "INSERT INTO platform (name) VALUES (:name)";
         
@@ -35,9 +35,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['name'])) {
         // Provide a link to add another platform
         echo '<a href="add-platform.php" style="color: blue; text-decoration: underline; font-weight: bold;">Add another platform</a>';//added inline style
 
+        // Disconnect from the database
+        $db = null;
+
     } catch (Exception $e) {
-        // Catch and display any exceptions/errors during the database operation
-        echo "Error adding platform: " . $e->getMessage();
+        // Catch and handle any exceptions/errors during the database operation
+        header('location:error.php');
+        exit();
     }
 } else {
     echo '<p>Name is required.</p>';

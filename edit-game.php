@@ -4,35 +4,41 @@ error_reporting(E_ALL); // added the above to catch the errors
 $title = 'Edit Game'; // Dynamic page title like always
 include('shared/header.php'); // Included the header
 include('shared/authentication.php');
+
 $gameId = $_GET['game_id'];
 
 $name = $releaseYear = $genre = $platformId = $developer = $description = $photo = null;
 // pretty cool way to do it eh
 // added photo
 
-if (is_numeric($gameId)) { // again same approach I want to use different stuff but I can't find any alternatives
-    require 'shared/database.php'; // Ensuring the database connection is established
+if (is_numeric($gameId)) {
+    try {
+        require 'shared/database.php'; // Ensuring the database connection is established
 
-    $sql = "SELECT * FROM games WHERE game_id = :game_id";
-    $cmd = $db->prepare($sql);
-    $cmd->bindParam(':game_id', $gameId, PDO::PARAM_INT);
-    $cmd->execute();
-    $game = $cmd->fetch(); // Fetching a single record
+        $sql = "SELECT * FROM games WHERE game_id = :game_id";
+        $cmd = $db->prepare($sql);
+        $cmd->bindParam(':game_id', $gameId, PDO::PARAM_INT);
+        $cmd->execute();
+        $game = $cmd->fetch(); // Fetching a single record
 
-    //pre-population stuff
-    $title = $game['title'];
-    $releaseYear = $game['release_year'];
-    $genre = $game['genre'];
-    $platformId = $game['platform_id'];
-    $developer = $game['developer'];
-    $description = $game['description'];
-    $photo = $game['photo'];
+        //pre-population stuff
+        $title = $game['title'];
+        $releaseYear = $game['release_year'];
+        $genre = $game['genre'];
+        $platformId = $game['platform_id'];
+        $developer = $game['developer'];
+        $description = $game['description'];
+        $photo = $game['photo'];
+    } catch (Exception $e) {
+        header('location:error.php');
+        exit();
+    }
 }
 ?>
 
 <!--using the same method I used in my assignment 1-->
 <h2>Edit Game Details</h2>
-<form method="post" action="update-game.php" enctype="multipart/form-data">
+<form method="post" action="update-game.php">
     <div>
         <label for="title">Game Name: *</label>
         <input name="title" id="title" required value="<?php echo htmlspecialchars($title); ?>" />

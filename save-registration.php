@@ -26,53 +26,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $good = false;
     }
 
-    require 'shared/database.php';
+    try {
+        require 'shared/database.php';
 
-    // Duplicate username check
-    $sql = "SELECT COUNT(*) FROM users WHERE username = :username";
-    $cmd = $db->prepare($sql);
-    $cmd->bindParam(':username', $username, PDO::PARAM_STR, 50);
-    $cmd->execute();
-    $count = $cmd->fetchColumn();
-
-    if ($count > 0) {
-        // Username already exists
-        $message .= 'Username already exists. Please choose a different one.<br />';
-        $good = false;
-    }
-
-    if ($good) {
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-
-        $sql = "INSERT INTO users (username, password) VALUES (:username, :passwordHash)";
+        // Duplicate username check
+        $sql = "SELECT COUNT(*) FROM users WHERE username = :username";
         $cmd = $db->prepare($sql);
         $cmd->bindParam(':username', $username, PDO::PARAM_STR, 50);
-        $cmd->bindParam(':passwordHash', $passwordHash, PDO::PARAM_STR, 255);
         $cmd->execute();
+        $count = $cmd->fetchColumn();
 
-        $db = null;
+        if ($count > 0) {
+            // Username already exists
+            $message .= 'Username already exists. Please choose a different one.<br />';
+            $good = false;
+        }
 
-        header('Location: login.php?message=Registration successful');
-        exit;
+        if ($good) {
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+            $sql = "INSERT INTO users (username, password) VALUES (:username, :passwordHash)";
+            $cmd = $db->prepare($sql);
+            $cmd->bindParam(':username', $username, PDO::PARAM_STR, 50);
+            $cmd->bindParam(':passwordHash', $passwordHash, PDO::PARAM_STR, 255);
+            $cmd->execute();
+
+            $db = null;
+
+            header('Location: login.php?message=Registration successful');
+            exit;
+        }
+        ?>
+    <h2>User Registration</h2>
+    <!-- Display validation message -->
+    <div><?php echo $message; ?></div>
+    <form method="post">
+        <fieldset>
+            <label for="username">Email Address:</label>
+            <input name="username" id="username" required type="email" placeholder="yourname@example.com" />
+        </fieldset>
+        <fieldset>
+            <label for="password">Create Password:</label>
+            <input type="password" name="password" id="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
+        </fieldset>
+        <fieldset>
+            <label for="confirm">Confirm Password:</label>
+            <input type="password" name="confirm" id="confirm" required />
+        </fieldset>
+        <button type="submit" class="offset-button">Register</button>
+    </form></form>
+    <?php include('shared/footer.php');
+    
+    } catch (Exception $err) {
+        header('location:error.php');
+        exit();
     }
 }
 ?>
-<h2>User Registration</h2>
-<!-- Display validation message -->
-<div><?php echo $message; ?></div>
-<form method="post">
-    <fieldset>
-        <label for="username">Email Address:</label>
-        <input name="username" id="username" required type="email" placeholder="yourname@example.com" />
-    </fieldset>
-    <fieldset>
-        <label for="password">Create Password:</label>
-        <input type="password" name="password" id="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
-    </fieldset>
-    <fieldset>
-        <label for="confirm">Confirm Password:</label>
-        <input type="password" name="confirm" id="confirm" required />
-    </fieldset>
-    <button type="submit" class="offset-button">Register</button>
-</form></form>
-<?php include('shared/footer.php'); ?>

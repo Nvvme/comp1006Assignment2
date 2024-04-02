@@ -4,7 +4,7 @@ include('shared/authentication.php');
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 include('shared/header.php'); // Including the header as always
-
+try {
 // Capture form inputs.. again the usual stuff
 $gameId = $_POST['game_id']; // Game ID from the hidden input in the edit form
 $title = $_POST['title'];
@@ -90,5 +90,10 @@ if ($good) {
 
     // Redirecting to the game list page
     header('location:game-list.php');
+    
+}
+} catch (Exception $e) {
+    header('location:error.php');
+    exit;
 }
 ?>

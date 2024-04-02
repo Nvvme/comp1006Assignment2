@@ -3,6 +3,7 @@ $title = 'Add New Game';
 include('shared/header.php'); // included the header file
 include('shared/authentication.php');
 require 'shared/database.php';
+
 ?>
 <h2>Add New Game</h2>
 <form action="insert-game.php" method="post" enctype="multipart/form-data">
@@ -22,6 +23,7 @@ require 'shared/database.php';
         <label for="platform_id">Platform:</label>
         <select id="platform_id" name="platform_id" required>
             <?php
+                     try {
             // Fetch platforms from the database to populate the dropdown
             $sql = "SELECT * FROM platform ORDER BY name";
             $stmt = $db->prepare($sql);
@@ -31,6 +33,9 @@ require 'shared/database.php';
             foreach ($platforms as $platform) {
                 // looks pretty complex huh
                 echo '<option value="' . htmlspecialchars($platform['platform_id']) . '">' . htmlspecialchars($platform['name']) . '</option>';
+            }
+        } catch (Exception $e) {
+            echo '<option value="">Error loading platforms</option>';
             }
             ?>
         </select>
