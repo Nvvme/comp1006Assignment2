@@ -1,6 +1,8 @@
 <?php
 $title = 'Saving Game Updates...';
 include('shared/authentication.php');
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 include('shared/header.php'); // Including the header as always
 
 // Capture form inputs.. again the usual stuff
@@ -39,14 +41,30 @@ if (empty($platformId)) {
     $good = false;
 }
 
+// for photo 
+$finalName = $_POST['currentPhoto']; // Default to existing photo
+if ($_FILES['photo']['size'] > 0) {
+    $photoName = $_FILES['photo']['name'];
+    $finalName = session_id() . '-' . $photoName;
+    $tmp_name = $_FILES['photo']['tmp_name'];
+    $type = mime_content_type($tmp_name);
+
+    if (!in_array($type, ['image/jpeg', 'image/png'])) {
+        echo 'Invalid file type.';
+        exit;
+    } else {
+        move_uploaded_file($tmp_name, 'image/uploads/' . $finalName);
+    }
+}
+
+
 if ($good) {
     // Database connection
     require 'shared/database.php';
 
     // SQL UPDATE command setup
     $sql = "UPDATE games SET title = :title, release_year = :releaseYear, 
-            genre = :genre, platform_id = :platformId, developer = :developer, 
-            description = :description WHERE game_id = :gameId";
+            genre = :genre, platform_id = :platformId, developer = :developer,  photo = :photo, description = :description WHERE game_id = :gameId";
 
     // Preparing SQL statement
     $cmd = $db->prepare($sql);
@@ -59,6 +77,7 @@ if ($good) {
     $cmd->bindParam(':developer', $developer, PDO::PARAM_STR, 255);
     $cmd->bindParam(':description', $description, PDO::PARAM_STR);
     $cmd->bindParam(':gameId', $gameId, PDO::PARAM_INT);
+    $cmd->bindParam(':photo', $finalName, PDO::PARAM_STR);
 
     // Executing the update
     $cmd->execute();

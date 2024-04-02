@@ -6,8 +6,9 @@ include('shared/header.php'); // Included the header
 include('shared/authentication.php');
 $gameId = $_GET['game_id'];
 
-$title = $releaseYear = $genre = $platform = $developer = $description = null;
+$name = $releaseYear = $genre = $platformId = $developer = $description = $photo = null;
 // pretty cool way to do it eh
+// added photo
 
 if (is_numeric($gameId)) { // again same approach I want to use different stuff but I can't find any alternatives
     require 'shared/database.php'; // Ensuring the database connection is established
@@ -25,12 +26,13 @@ if (is_numeric($gameId)) { // again same approach I want to use different stuff 
     $platformId = $game['platform_id'];
     $developer = $game['developer'];
     $description = $game['description'];
+    $photo = $game['photo'];
 }
 ?>
 
 <!--using the same method I used in my assignment 1-->
 <h2>Edit Game Details</h2>
-<form method="post" action="update-game.php">
+<form method="post" action="update-game.php" enctype="multipart/form-data">
     <div>
         <label for="title">Game Name: *</label>
         <input name="title" id="title" required value="<?php echo htmlspecialchars($title); ?>" />
@@ -64,6 +66,15 @@ if (is_numeric($gameId)) { // again same approach I want to use different stuff 
         <label for="developer">Developer:</label>
         <input name="developer" id="developer" value="<?php echo htmlspecialchars($developer); ?>" />
     </div>
+    <input type="hidden" name="game_id" value="<?php echo $gameId; ?>" />
+    <div>
+        <label for="photo">Photo:</label>
+        <input type="file" id="photo" name="photo" accept="image/*" />
+        <input type="hidden" id="currentPhoto" name="currentPhoto" value="<?php echo $photo; ?>" />
+        <?php if (!empty($photo)): ?>
+            <img src="image/uploads/<?php echo $photo; ?>" alt="Game Photo" style="width:100px; height:auto;">
+        <?php endif; ?>
+        </div>
     <div>
         <label for="description">Description:</label>
         <textarea name="description" id="description"><?php echo htmlspecialchars($description); ?></textarea>
