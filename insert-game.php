@@ -1,9 +1,28 @@
 <?php
 ini_set('display_errors', 1);
-error_reporting(E_ALL); // added the above to catch the errors
+error_reporting(E_ALL);
 $title = 'Saving New Game...';
 include('shared/authentication.php');
 include('shared/header.php');
+
+$finalName = null; // Default value if no file is uploaded
+
+// Check if a file is uploaded
+if ($_FILES['photo']['error'] == UPLOAD_ERR_OK && $_FILES['photo']['size'] > 0) {
+    $tmp_name = $_FILES['photo']['tmp_name'];
+    $type = mime_content_type($tmp_name);
+
+    // Validate file type
+    if (in_array($type, ['image/jpeg', 'image/png', 'image/gif'])) {
+        $photoName = $_FILES['photo']['name'];
+        $finalName = session_id() . '-' . $photoName;
+        $uploadPath = 'image/uploads/' . $finalName;
+        move_uploaded_file($tmp_name, $uploadPath);
+    } else {
+        echo 'Invalid file type. Only JPEG, PNG, and GIF are allowed.';
+        exit;
+    }
+}
 
 // Capture form inputs into variables
 $Title = $_POST['title'];
@@ -35,40 +54,6 @@ if (empty($genre)) {
     $ok = false;
 }
 
-// adding the photo stuff
-// Process photo if any
-if (!empty($_FILES['photo']['name'])) {
-    $photoName = $_FILES['photo']['name'];
-    $size = $_FILES['photo']['size'];
-    $tmp_name = $_FILES['photo']['tmp_name'];
-    $type = mime_content_type($tmp_name);
-
-    // Validate file size (e.g., up to 5MB)
-    $maxSize = 5 * 1024 * 1024; // 5MB in bytes
-    if ($size > $maxSize) {
-        echo "The file is too large. Maximum size is 5MB.<br />";
-    } else {
-        // Validate file type (only allow JPEG and PNG)
-        if (in_array($type, ['image/jpeg', 'image/png', 'image/gif'])) {
-            // Create a unique filename to prevent overwriting
-            $uploadDir = 'img/uploads/';
-            $uniquePhotoName = uniqid('game_', true) . strrchr($photoName, '.'); // Prefix with game_ and append original extension
-
-            // Attempt to move the file from temp location to uploads directory
-            if (move_uploaded_file($tmp_name, $uploadDir . $uniquePhotoName)) {
-                echo "File uploaded successfully.<br />";
-                // Here you can also insert or update the path in your database
-            } else {
-                echo "There was an error uploading the file.<br />";
-            }
-        } else {
-            echo "Invalid file type. Only JPEG, PNG, and GIF are allowed.<br />";
-        }
-    }
-} else {
-    echo "No file uploaded.<br />";
-}
-
 if (empty($platform_id)) {
     echo 'Platform is required<br />';
     $ok = false;
@@ -78,8 +63,8 @@ if ($ok) {
     include('shared/database.php'); // Connected to the database
 
     // Correctly formatted SQL statement with placeholders for PDO
-    $sql = "INSERT INTO games (title, release_year, genre, platform_id, developer, description) 
-            VALUES (:title, :release_year, :genre, :platform_id, :developer, :description)";
+    $sql = "INSERT INTO games (title, release_year, genre, platform_id, developer, description, photo) 
+            VALUES (:title, :release_year, :genre, :platform_id, :developer, :description, :photo)";
 
     $cmd = $db->prepare($sql);
 
@@ -90,6 +75,7 @@ if ($ok) {
     $cmd->bindParam(':platform_id', $platform_id, PDO::PARAM_INT);
     $cmd->bindParam(':developer', $developer, PDO::PARAM_STR, 255);
     $cmd->bindParam(':description', $description, PDO::PARAM_STR);
+    $cmd->bindParam(':photo', $finalName, PDO::PARAM_STR); // Corrected variable name here
 
     $cmd->execute();
 

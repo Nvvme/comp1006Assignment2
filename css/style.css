@@ -3,6 +3,7 @@ But I still added some CSS to make it look nice*/
 /*I will comment the css later if I have some time left, either way I don't think its required*/
     body {
         top: 50%;
+        max-width: 100%;
         bottom: auto;
         margin: 0;
         padding: 0;
@@ -13,6 +14,7 @@ But I still added some CSS to make it look nice*/
         position: relative;
         max-height: max-content;
     }
+
     body::before {
         content: "";
         position: absolute;
@@ -65,32 +67,8 @@ But I still added some CSS to make it look nice*/
         padding: 10px;
         position: static;
         bottom: 0;
-        width: 100%;
-    }
-
-    table {
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 20px;
-        border-collapse: collapse;
-        width: 90%;
-        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    th, td {
-        border: 1px solid #ddd;
-        text-align: left;
-        padding: 12px;
-    }
-
-    th {
-        background-color: #d10000;
-        color: #fff;
-        font-family: 'Orbitron', sans-serif;
-    }
-
-    tr:hover {
-        background-color: #fa6161;
+        max-width: 100%;
+        z-index: -1;
         opacity: 75%;
     }
 
@@ -219,5 +197,38 @@ But I still added some CSS to make it look nice*/
     .toggle-password:hover {
         transform: scale(1.2); /* Scale effect on hover */
     }
+
+    table {
+        height: auto;
+        max-width: 100%;
+        border-collapse: collapse;
+        margin: 20px auto;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #ddd;
+        word-break: break-word; /* Allows text to wrap within the cell */
+    }
+
+    th {
+        background-color: #d10000;
+        color: #fff;
+        font-size: 16px; /* Adjust based on your preference */
+    }
+
+    @media (max-width: 600px) {
+        th, td {
+            font-size: 14px; /* Smaller font size for mobile */
+        }
+    
+        td img {
+            max-width: 80px; /* Smaller images on mobile */
+            height: auto;
+        }
+    }
+                
     
       /*I give my thanks to prof Scott for his CSS Lessons*/
