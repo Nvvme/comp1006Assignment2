@@ -25,7 +25,14 @@ if (session_status() == PHP_SESSION_NONE) {
             <li><a href="add-game.php">Add Game</a></li>
             <li><a href="game-list.php">Game List</a></li>
             <li><a href="add-platform.php">Add Platform</a></li>
-            <li><a href="logout.php">Logout (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a></li>
+            <li>
+                    <a href="logout.php" id="user-logout">Logout (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a>
+                    <?php if (!empty($_SESSION['lastLogin'])): ?>
+                        <!-- Display the last login time -->
+                        <span>Last Login: <?php echo htmlspecialchars($_SESSION['lastLogin']); ?></span>
+                    <?php endif; 
+                    // I am adding the last login in the header?>
+                </li>
         <?php else: ?>
             <!-- These links are visible to all visitors -->
             <li><a href="game-list.php">Game List</a></li>

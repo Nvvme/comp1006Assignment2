@@ -2,6 +2,9 @@
 // Set the title of the webpage
 $title = 'Register - Game Database';
 require 'shared/header.php';
+if (!empty($_GET['duplicate'])) {
+    echo '<h3 class="error">Username already exists. Please choose a different one.</h3>';
+}
 ?>
 
 <!-- Display registration heading -->
@@ -19,16 +22,21 @@ require 'shared/header.php';
 
   <fieldset>
     <label for="password">Create Password:</label>
-    <!-- The pattern looks really cool -->
-    <input type="password" name="password" id="password" required
-      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one uppercase and lowercase letter, and at least 8 or more characters" />
-  </fieldset>
+    <div class="password-container">
+        <input type="password" name="password" id="password" required
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one uppercase and lowercase letter, and at least 8 or more characters" />
+        <button type="button" id="togglePassword" class="toggle-password">👁</button> <!--pretty cool right-->
+    </div>
+</fieldset>
 
-  <fieldset>
+<fieldset>
     <label for="confirm">Confirm Password:</label>
-    <input type="password" name="confirm" id="confirm" required
-      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
-  </fieldset>
+    <div class="password-container">
+        <input type="password" name="confirm" id="confirm" required
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
+        <button type="button" class="toggle-password">👁</button>
+    </div>
+</fieldset>
 
   <!-- Button element for Registration -->
   <button type="submit" class="offset-button">Register</button>

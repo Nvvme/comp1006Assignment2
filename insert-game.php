@@ -35,6 +35,40 @@ if (empty($genre)) {
     $ok = false;
 }
 
+// adding the photo stuff
+// Process photo if any
+if (!empty($_FILES['photo']['name'])) {
+    $photoName = $_FILES['photo']['name'];
+    $size = $_FILES['photo']['size'];
+    $tmp_name = $_FILES['photo']['tmp_name'];
+    $type = mime_content_type($tmp_name);
+
+    // Validate file size (e.g., up to 5MB)
+    $maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    if ($size > $maxSize) {
+        echo "The file is too large. Maximum size is 5MB.<br />";
+    } else {
+        // Validate file type (only allow JPEG and PNG)
+        if (in_array($type, ['image/jpeg', 'image/png', 'image/gif'])) {
+            // Create a unique filename to prevent overwriting
+            $uploadDir = 'img/uploads/';
+            $uniquePhotoName = uniqid('game_', true) . strrchr($photoName, '.'); // Prefix with game_ and append original extension
+
+            // Attempt to move the file from temp location to uploads directory
+            if (move_uploaded_file($tmp_name, $uploadDir . $uniquePhotoName)) {
+                echo "File uploaded successfully.<br />";
+                // Here you can also insert or update the path in your database
+            } else {
+                echo "There was an error uploading the file.<br />";
+            }
+        } else {
+            echo "Invalid file type. Only JPEG, PNG, and GIF are allowed.<br />";
+        }
+    }
+} else {
+    echo "No file uploaded.<br />";
+}
+
 if (empty($platform_id)) {
     echo 'Platform is required<br />';
     $ok = false;

@@ -14,11 +14,12 @@ require 'shared/header.php';
     <label for="username">Username (Email):</label>
     <input name="username" id="username" required type="email" placeholder="you@example.com" />
   </fieldset>
-  
-  <fieldset>
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password" required />
-  </fieldset>
+
+  <fieldset class="password-container">
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" name="password" required>
+                <button type="button" class="toggle-password">👁</button>
+            </fieldset>
 
   <!-- Button element for Log In -->
   <button type="submit" class="offset-button">Log In</button>

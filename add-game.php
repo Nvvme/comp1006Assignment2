@@ -4,9 +4,8 @@ include('shared/header.php'); // included the header file
 include('shared/authentication.php');
 require 'shared/database.php';
 ?>
-
 <h2>Add New Game</h2>
-<form action="insert-game.php" method="post">
+<form action="insert-game.php" method="post" enctype="multipart/form-data">
     <div>
         <label for="title">Game Name:</label>
         <input type="text" id="title" name="title" required>
@@ -41,11 +40,15 @@ require 'shared/database.php';
         <input type="text" id="developer" name="developer">
     </div>
     <div>
+        <label for="photo">Photo:</label>
+        <input type="file" id="photo" name="photo" />
+    </div>
+        </br>
+    <div>
         <label for="description">Description:</label>
         <textarea id="description" name="description"></textarea>
     </div>
     <button type="submit">Add Game</button>
 </form>
 <!-- Created the form that will be on the webpage, on the frontend -->
-
 <?php include('shared/footer.php'); // linked my footer ?>

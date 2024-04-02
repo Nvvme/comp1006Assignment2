@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (strlen($password) < 8 || !preg_match("/[a-z]/", $password) || !preg_match("/[A-Z]/", $password) || !preg_match("/[0-9]/", $password)) {
-        $message .= 'Password must be at least 8 characters long, include a digit, an upper-case letter, and a lower-case letter.<br />'; // found something that I can do differently
+        $message .= 'Password must be at least 8 characters long, include a digit, an upper-case letter, and a lower-case letter.<br />';
         $good = false;
     }
 
@@ -26,19 +26,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $good = false;
     }
 
+    require 'shared/database.php';
+
+    // Duplicate username check
+    $sql = "SELECT COUNT(*) FROM users WHERE username = :username";
+    $cmd = $db->prepare($sql);
+    $cmd->bindParam(':username', $username, PDO::PARAM_STR, 50);
+    $cmd->execute();
+    $count = $cmd->fetchColumn();
+
+    if ($count > 0) {
+        // Username already exists
+        $message .= 'Username already exists. Please choose a different one.<br />';
+        $good = false;
+    }
+
     if ($good) {
-        require 'shared/database.php';
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-        $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
+        $sql = "INSERT INTO users (username, password) VALUES (:username, :passwordHash)";
         $cmd = $db->prepare($sql);
         $cmd->bindParam(':username', $username, PDO::PARAM_STR, 50);
-        $cmd->bindParam(':password', $passwordHash, PDO::PARAM_STR, 255);
+        $cmd->bindParam(':passwordHash', $passwordHash, PDO::PARAM_STR, 255);
         $cmd->execute();
 
         $db = null;
 
-        // I think this is nice for the User Experience
         header('Location: login.php?message=Registration successful');
         exit;
     }
@@ -61,5 +74,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="password" name="confirm" id="confirm" required />
     </fieldset>
     <button type="submit" class="offset-button">Register</button>
-</form>
+</form></form>
 <?php include('shared/footer.php'); ?>

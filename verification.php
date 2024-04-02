@@ -11,11 +11,11 @@ $password = $_POST['password'];
 include('shared/database.php');
 
 // Prepare and execute the query to find the user by username
-$sql = "SELECT userId, username, password FROM users WHERE username = :username"; // Adjusted to userId
+$sql = "SELECT userId, username, password, last_login FROM users WHERE username = :username"; 
 $cmd = $db->prepare($sql);
 $cmd->bindParam(':username', $username, PDO::PARAM_STR, 50);
 $cmd->execute();
-$user = $cmd->fetch();
+$user = $cmd->fetch(); 
 
 // Redirect if no user found or if the password doesn't match
 if (!$user || !password_verify($password, $user['password'])) {
@@ -31,9 +31,10 @@ if (!$user || !password_verify($password, $user['password'])) {
 
     // Start a session and store user identity
     session_start();
-    $_SESSION['userId'] = $user['userId']; // Storing userId for consistency
+    $_SESSION['userId'] = $user['userId'];
     $_SESSION['username'] = $username;
-
+    $_SESSION['lastLogin'] = $user['last_login'];
+    
     $db = null; // Close database connection
     header('location:index.php'); // Redirect to the main page or dashboard
     exit;

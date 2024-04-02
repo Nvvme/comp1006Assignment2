@@ -36,7 +36,7 @@ foreach ($games as $game) {
   // Only show the "Update" and "Delete" options to logged-in users
   if (!empty($_SESSION['userId'])) {
       echo '<td>
-              <a href="edit-game.php?game_id=' . $game['game_id'] . '">Update</a> |
+              <a href="edit-game.php?game_id=' . $game['game_id'] . '">Update</a> 
               <a href="delete-game.php?game_id=' . $game['game_id'] . '" onclick="return confirm(\'Are you sure you want to delete this game?\');">Delete</a>
             </td>';
   }
