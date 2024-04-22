@@ -38,7 +38,7 @@ if (is_numeric($gameId)) {
 
 <!--using the same method I used in my assignment 1-->
 <h2>Edit Game Details</h2>
-<form method="post" action="update-game.php">
+<form method="post" action="update-game.php" enctype="multipart/form-data">
     <div>
         <label for="title">Game Name: *</label>
         <input name="title" id="title" required value="<?php echo htmlspecialchars($title); ?>" />

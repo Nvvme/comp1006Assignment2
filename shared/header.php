@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nav's Game Database</title>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/normalize.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="image/icons8-xbox-controller-30.png" type="image/x-icon"> <!--Icon taken from icons8.com-->
     <script src="js/scripts.js" defer> </script>
