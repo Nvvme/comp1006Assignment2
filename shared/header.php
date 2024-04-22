@@ -6,6 +6,7 @@
     <title>Nav's Game Database</title>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/mobile.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet"> <!-- the font-->
     <link rel="shortcut icon" href="image/icons8-xbox-controller-30.png" type="image/x-icon"> <!--Icon taken from icons8.com-->
     <script src="js/scripts.js" defer> </script>
@@ -19,6 +20,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <body>
 <header>
     <h1>Nav's Game Database</h1>
+    <div id="menu-icon">&#9776;</div> <!-- My Hamburger Menu Icon :) -->
     <nav>
     <ul>
         <li><a href="index.php">Home</a></li>

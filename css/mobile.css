@@ -1,0 +1,112 @@
+/* I am using the same method that prof used in the class*/
+@media (max-width: 600px) {
+    /* Display the hamburger menu icon only on small screens */
+    #menu-icon {
+        display: block;
+        cursor: pointer;
+        font-size: 2rem;
+        color: white;
+        padding: 20px; /* Larger area to ensure easy touch */
+        text-align: left;
+    }
+    
+
+    /* Style adjustments for the mobile navigation menu */
+    nav ul {
+        position: absolute;
+        top: 60px; 
+        width: 100%;
+        background-color: #fff;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+        left: -100%; /* Start off-screen */
+        transition: left 0.3s ease; /* Smooth transition for sliding in */
+        padding: 0;
+        margin: 0;
+        border-top: 3px solid #d10000; /* Stylistic border top */
+    }
+
+    /* Ensuring the navigation links are full-width for easier touch navigation */
+    nav ul li {
+        width: 100%; 
+    }
+
+    nav ul li a {
+        display: block;
+        width: 100%;
+        padding: 10px 0; /* Adequate padding for tap areas */
+        text-align: center; /* Centers link text */
+        color: black; 
+        background-color: transparent;
+    }
+
+    nav ul li a:hover, nav ul li a:focus {
+        background-color: #ccc; /* Highlight link on hover/focus */
+        color: white;
+    }
+
+    #menu-icon:focus + nav ul,
+    #menu-icon:hover + nav ul,
+    nav ul:hover {
+        left: 0; /* Brings the navigation menu on-screen */
+        z-index: 1000; /* So that it doesn't go behind any other element */
+    }
+
+
+    /* Ensure the header and footer are full width */
+    header, footer {
+        width: 100%;
+        text-align: center;
+    }
+
+    footer {
+        padding: 8px 15px;
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Table adjustments to prevent overflow */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead {
+        position: absolute;
+        top: -9999px;
+    }
+
+    tr { 
+        margin: 0;
+    }
+
+    td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    td:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        padding-right: 10px;
+    }
+
+        td img {
+            max-width: 100%; /* Ensures images do not cause overflow */
+            display: block;
+            margin: 0 auto;
+        }
+
+        th, td {
+            font-size: 14px; 
+        }
+    
+        td img {
+            max-width: 80px; /* Smaller images on mobile */
+            height: auto;
+        }
+
+}
