@@ -31,21 +31,22 @@ echo '</tr></thead><tbody>';
 // Loop through the result set and displaying each game
 foreach ($games as $game) {
     echo '<tr>
-            <td>' . htmlspecialchars($game['title']) . '</td>
-            <td><img src="image/uploads/' . htmlspecialchars($game['photo']) . '" alt="Game Photo" style="width:100px; height:auto;"></td>
-            <td>' . htmlspecialchars($game['release_year']) . '</td>
-            <td>' . htmlspecialchars($game['genre']) . '</td>
-            <td>' . htmlspecialchars($game['platformName']) . '</td>
-            <td>' . htmlspecialchars($game['developer']) . '</td>
-            <td>' . htmlspecialchars($game['description']) . '</td>';
-    // Only show the "Update" and "Delete" options to logged-in users
-    if (!empty($_SESSION['userId'])) {
-        echo '<td>
-                <a href="edit-game.php?game_id=' . $game['game_id'] . '">Update</a> 
-                <a href="delete-game.php?game_id=' . $game['game_id'] . '" onclick="return confirm(\'Are you sure you want to delete this game?\');">Delete</a>
-              </td>';
-    }
-    echo '</tr>';
+    <td data-label="Title">' . htmlspecialchars($game['title']) . '</td>
+    <td data-label="Photo"><img src="image/uploads/' . htmlspecialchars($game['photo']) . '" alt="Game Photo" style="width:100px; height:auto;"></td>
+    <td data-label="Release Year">' . htmlspecialchars($game['release_year']) . '</td>
+    <td data-label="Genre">' . htmlspecialchars($game['genre']) . '</td>
+    <td data-label="Platform">' . htmlspecialchars($game['platformName']) . '</td>
+    <td data-label="Developer">' . htmlspecialchars($game['developer']) . '</td>
+    <td data-label="Description">' . htmlspecialchars($game['description']) . '</td>';
+        // Only show the "Update" and "Delete" options to logged-in users
+
+if (!empty($_SESSION['userId'])) {
+    echo '<td data-label="Actions">
+            <a href="edit-game.php?game_id=' . $game['game_id'] . '">Update</a>
+            <a href="delete-game.php?game_id=' . $game['game_id'] . '" onclick="return confirm(\'Are you sure you want to delete this game?\');">Delete</a>
+          </td>';
+}
+echo '</tr>';
 }
 
 echo '</tbody></table>'; // Close the table

@@ -1,6 +1,5 @@
-/* I know, the css and the styling of the website is not a part of the assignment
-But I still added some CSS to make it look nice*/
-/*I will comment the css later if I have some time left, either way I don't think its required*/
+/* CSS for the project of my interface design class */
+
     body {
         top: 50%;
         max-width: 100%;
@@ -11,13 +10,16 @@ But I still added some CSS to make it look nice*/
         background-color: #111;
         color: #eee;
         height: 100%;
+        flex-direction: column; /* Stack children (content, footer, etc.) vertically */
+        min-height: 100vh; /* Ensure it at least covers the full viewport height */
         position: relative;
         max-height: max-content;
+        overflow-x: hidden; /* Prevents horizontal scroll */
     }
 
     body::before {
         content: "";
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         right: 0;
@@ -64,14 +66,18 @@ But I still added some CSS to make it look nice*/
         background-color: #222;
         color: #fff;
         text-align: center;
-        padding: 10px;
-        position: static;
+        padding: 20px 10px;
+        position: relative;
         bottom: 0;
+        left: 0;
+        right: 0;
         max-width: 100%;
         z-index: -1;
         opacity: 75%;
+        box-sizing: border-box;
+        clear: both;
+        width: 100%;
     }
-
 /*Adding some additional CSS for the second assignment*/
 
     /*Trying to make my website look more modern*/
@@ -82,7 +88,7 @@ But I still added some CSS to make it look nice*/
             border-radius: 8px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             max-width: 600px;
-            margin: 0 auto;
+            margin: 0 auto 50px;
             font-size: 1rem;
             height: auto;
             position: relative;
@@ -216,12 +222,15 @@ But I still added some CSS to make it look nice*/
     th {
         background-color: #d10000;
         color: #fff;
-        font-size: 16px; /* Adjust based on your preference */
+        font-size: 16px; 
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis
     }
 
     @media (max-width: 600px) {
         th, td {
-            font-size: 14px; /* Smaller font size for mobile */
+            font-size: 14px; 
         }
     
         td img {
@@ -229,6 +238,72 @@ But I still added some CSS to make it look nice*/
             height: auto;
         }
     }
-                
+    /* adding some css to make my table better for smaller screens*/
+
+    @media (max-width: 600px) {
+        table {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        thead, tbody, th, td, tr {
+            display: block;
+        }
+
+        thead {
+            position: absolute;
+            top: -9999px;
+            left: -9999px; /* Effectively hides the header */
+        }
+
+        tr { 
+            margin: 0;
+        }
+
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        td:before {
+            content: attr(data-label);
+            float: left;
+            font-weight: bold;
+            width: 40%;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+
+        td img {
+            max-width: 90%; /* Limits image width to prevent spillover */
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+
+        header, footer {
+            width: 100%; /* Ensures they extend full width of the viewport */
+            display: block;
+            text-align: center; /* Centers text within header and footer */
+        }
+    }
+
+    @media (max-width: 600px) {
+        body, body::before {
+            min-height: 100vh; /* Ensure full coverage on mobile too */
+        }
     
+        footer {
+            display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 15px;
+        font-size: 12px;
+        text-align: center;
+        width: 100%;
+        }
+    }
       /*I give my thanks to prof Scott for his CSS Lessons*/
